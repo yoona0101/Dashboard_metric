@@ -1,0 +1,119 @@
+﻿@using Dashboard_metric.Controller;
+@using Dashboard_metric.Model;
+@using Dashboard_metric.ViewModel;
+@using MudBlazor.Services;
+
+@page "/users"
+
+
+<h3>Клиенты</h3>
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+    <MudGrid>
+       
+        <MudItem xs="12" sm="6" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 160px; ">
+                <MudText Typo="Typo.h6" GutterBottom="true">Количество уникальных клиентов</MudText>
+                <MudText Typo="Typo.h4" Style="margin-top:20px;">@intCountOfSessions</MudText>
+            </MudPaper>
+           
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+           
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pa-4" Style="height: 160px; ">
+                        <MudText Typo="Typo.h6" GutterBottom="true">Средняя глубина просмотра</MudText>
+                    <MudText Typo="Typo.h4" Style="margin-top:20px;">@avgViewingDepth</MudText>
+                    </MudPaper>
+                </MudItem>
+                
+           
+        </MudItem>
+           
+        
+        <MudItem xs="12" sm="6" md="8">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 450px; ">
+                <div>
+                    <MudChart ChartType="ChartType.Line" ChartSeries="@Series" @bind-SelectedIndex="index" XAxisLabels="@XAxisLabels" Width="100%" Height="350px" ChartOptions="@Options" />
+                    
+                    </div>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="8">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 450px; ">
+                <div>
+                    <MudText Typo="Typo.h6">Индикатор сеанса</MudText>
+                    <MudChart ChartType="ChartType.Bar" ChartSeries="@Series1" @bind-SelectedIndex="index" Width="100%" Height="350px"></MudChart>
+
+                </div>
+            </MudPaper>
+        </MudItem>
+        
+    </MudGrid>
+</MudContainer>
+@code {
+
+    private int index = -1; //default value cannot be 0 -> first selectedindex is 0.
+    public ChartOptions Options = new ChartOptions();
+
+    public List<ChartSeries> Series = new List<ChartSeries>()
+    {
+        new ChartSeries() { Name = "Fossil", Data = new double[] { 90, 79, 72, 69, 62, 62, 55, 65, 70 } },
+        new ChartSeries() { Name = "Renewable", Data = new double[] { 10, 41, 35, 51, 49, 62, 69, 91, 148 } },
+    };
+    public string[] XAxisLabels = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep" };
+
+    private DateRange _dateRange { get; set; }
+
+    //private string countOfSessions { get; set; } = CountOfSession;
+
+    private string avgViewingDepth { get; set; } = "3";
+
+    public double[] data = { 25, 77, 28, 5 };
+    public string[] labels = { "Oil", "Coal", "Gas", "Biomass" };
+
+    private string intCountOfSessions = "300";
+    public List<ChartSeries> Series1 = new List<ChartSeries>()
+    {
+        new ChartSeries() { Name = "Fossil", Data = new double[] { 90 } },
+        new ChartSeries() { Name = "Renewable", Data = new double[] { 10 } },
+    };
+
+
+    /*private MainWindowController controller = new MainWindowController();
+    private async Task LoadMetrics()
+        {
+        try
+            {
+            //Замените на необходимые данные для IntervalData
+            var interval = new IntervalData
+                    {
+                    EndDate = "01.11.2024",
+                    StartDate = "30.10.2024"
+            };
+            var metric = await controller.GetMetrics(interval);
+            if (metric != null)
+                {
+                intCountOfSessions = $"мяу {metric.CountOfSessions}";
+            }
+            else
+                {
+                intCountOfSessions = "Ошибка получения данных с сервера.";
+        }
+        }
+        catch (Exception ex)
+            {
+            intCountOfSessions = $"Ошибка: {ex.Message}\nStackTrace: {ex.StackTrace}";
+    }
+    }
+
+    protected override async Task OnInitializedAsync()
+        {
+        await LoadMetrics();
+    }*/
+
+
+}
+
+
